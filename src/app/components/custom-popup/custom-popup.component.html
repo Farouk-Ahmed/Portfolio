@@ -1,0 +1,15 @@
+<div class="custom-popup-wrapper" [class.is-visible]="isOpen">
+  <div class="custom-popup-card" (mousedown)="$event.stopPropagation()">
+    
+    <!-- Close Button -->
+    <button class="close-btn" aria-label="Close" (click)="close()">
+      &times;
+    </button>
+
+    <!-- Transcluded Content (ng-content) -->
+    <div class="custom-popup-content">
+      <ng-content></ng-content>
+    </div>
+    
+  </div>
+</div>

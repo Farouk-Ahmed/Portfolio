@@ -1,0 +1,75 @@
+/* Wrapper covers the screen but allows clicks to pass through */
+.custom-popup-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  
+  /* Crucial: Allows interacting with background */
+  pointer-events: none;
+  visibility: hidden;
+
+  /* State: When Popup is Open */
+  &.is-visible {
+    visibility: visible;
+    
+    .custom-popup-card {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      /* Re-enable interactions only INSIDE the card */
+      pointer-events: auto;
+    }
+  }
+}
+
+/* The Floating Rectangular Card */
+.custom-popup-card {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  padding: 30px 20px 20px 20px;
+  
+  /* Initial State for Animation */
+  opacity: 0;
+  transform: scale(0.9) translateY(20px);
+  transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Close Button (X) at Top-Left */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px; /* Positioned Top-Left */
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  line-height: 1;
+  color: #666;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+
+  &:hover {
+    background-color: #f0f0f0;
+    color: #ff4757;
+  }
+}
+
+.custom-popup-content {
+  color: #333333;
+  font-family: inherit;
+  font-size: 16px;
+}
