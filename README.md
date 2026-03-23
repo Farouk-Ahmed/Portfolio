@@ -1,27 +1,66 @@
-# Newv
+# Portfolio — FAO
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.19.
+Personal portfolio website for **Farouk Ahmed (FAO)** — a full-stack developer showcase built with **Angular 18**, **Server-Side Rendering (SSR)** via Express, and a Mono-inspired static front-end (Elementor/Qi Addons asset paths under `public/`).
 
-## Development server
+**Repository:** [github.com/Farouk-Ahmed/Portfolio](https://github.com/Farouk-Ahmed/Portfolio)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Features
 
-## Code scaffolding
+- **Single-page layout** with anchor navigation: Home, Services, Creative Works, About, Contact
+- **Hero** with animated headline, intro copy, CV download (PDF), and **Vanta NET** background on `#home`
+- **Creative Works** — project galleries using **Swiper**; image lists load from `manifest.json` for `proj-1` and `proj-2` (fallback images if manifests fail)
+- **Contact form** — submits via [FormSubmit](https://formsubmit.co/) (no custom backend); first submission requires inbox activation
+- **Magnific Popup** image gallery, **WOW.js** / **Qi Addons** re-initialization after Angular renders
+- **Scroll-to-top** control and responsive header / mobile sidebar menu
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Tech stack
 
-## Build
+| Area | Details |
+|------|---------|
+| Framework | Angular 18 (standalone components) |
+| SSR | `@angular/ssr` + Express (`server.ts`) |
+| Styling | SCSS + theme CSS in `public/wp-content/themes/mono/` |
+| HTTP | `HttpClient` for manifests and form POST |
+| Tooling | Angular CLI 18.2.x, TypeScript ~5.5 |
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Prerequisites
 
-## Running unit tests
+- [Node.js](https://nodejs.org/) (LTS recommended, compatible with Angular 18)
+- npm
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Scripts
 
-## Running end-to-end tests
+```bash
+npm install
+npm start                 # Dev server → http://localhost:4200/
+npm run build             # Production build → dist/newv/
+npm run serve:ssr:newv    # Run SSR (after build): node dist/newv/server/server.mjs
+npm test                  # Unit tests (Karma)
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Regenerate project image manifests
 
-## Further help
+After adding or changing images under `public/wp-content/uploads/2024/Projects/<proj-id>/`:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+npm run proj1:manifest
+npm run proj2:manifest
+npm run proj4:manifest
+```
+
+## Project structure (short)
+
+- `src/app/` — root `AppComponent` (template, contact handler, Swiper/Vanta/Qi re-init)
+- `src/app/components/` — e.g. `custom-popup`
+- `public/` — static assets (images, fonts, legacy theme/plugin paths)
+- `scripts/generate-project-manifest.mjs` — writes `manifest.json` per project folder
+
+## Development notes
+
+- Static assets are served from `public/` as configured in `angular.json`.
+- Contact endpoint and subject line are defined in `app.component.ts`; adjust email/FormSubmit URL for your deployment.
+- Generated output and caches are ignored via `.gitignore` (`dist/`, `node_modules/`, `.angular/cache`).
+
+## License
+
+Personal portfolio project — use and adapt for your own site as needed.
