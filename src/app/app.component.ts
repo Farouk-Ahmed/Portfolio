@@ -36,9 +36,6 @@ declare global {
       >;
     };
     WOW?: new (options?: Record<string, unknown>) => { init: () => void };
-    VANTA?: {
-      NET: (options: Record<string, unknown>) => { destroy: () => void };
-    };
     Swiper?: new (
       el: string | Element,
       options?: Record<string, unknown>
@@ -71,7 +68,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly formSubmitAjaxUrl = 'https://formsubmit.co/ajax/faroukola99@gmail.com';
   private readonly http = inject(HttpClient);
   private readonly platformId = inject(PLATFORM_ID);
-  private vantaEffect: any;
   private wowInitialized = false;
   private qiCounterInited = false;
   private proj1Swiper: { destroy: (deleteInstance?: boolean, cleanStyle?: boolean) => void } | null =
@@ -183,9 +179,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.proj1Swiper = null;
     this.proj2Swiper?.destroy(true, true);
     this.proj2Swiper = null;
-    if (this.vantaEffect) {
-      this.vantaEffect.destroy();
-    }
   }
 
   ngAfterViewInit(): void {
@@ -237,23 +230,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
           mobile: false,
           live: true
         }).init();
-      }
-
-      // Initialize Vanta NET effect on #home
-      if (!this.vantaEffect && w.VANTA && $('#home').length) {
-        this.vantaEffect = w.VANTA.NET({
-          el: "#home",
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.00,
-          minWidth: 200.00,
-          scale: 1.00,
-          scaleMobile: 1.00,
-          color: 0xebbebe,
-          backgroundColor: 0x121212,
-          maxDistance: 31.00
-        });
       }
 
       // Initialize Magnific Popup for portfolio gallery

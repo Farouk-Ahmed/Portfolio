@@ -70,38 +70,47 @@
     }
 }
 
-@keyframes pulse-glow {
-
-    0%,
-    100% {
-        color: var(--th-main-color) !important;
-        text-shadow: 0 0 5px rgba(218, 197, 167, 0.4);
-    }
-
-    50% {
-        color: #ffffff !important;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
-    }
-}
-
-/* Home Section Text Styling */
+/* Home — full viewport height + Spline fill */
 #home {
+    position: relative;
+    overflow: hidden;
+    background-color: #000 !important;
+    background-image: none !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    min-height: 100svh !important;
+    --padding-top: 0px !important;
+    --padding-bottom: 0px !important;
+    --padding-left: 0px !important;
+    --padding-right: 0px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    box-sizing: border-box;
 
-    .qodef-m-title,
-    .qodef-m-title span.qodef-e-word-holder {
-        color: var(--th-main-color) !important;
+    .home-spline-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: auto;
+        background-color: #000;
+
+        iframe {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
     }
 
-    .dtr-iconhead__icon {
-        color: var(--th-main-color) !important;
-        animation: pulse-glow 3s infinite ease-in-out;
+    /* Pass clicks to Spline; shape divider is non-interactive */
+    > .e-con-inner {
+        position: relative;
+        z-index: 1;
+        pointer-events: none;
     }
 
-    p {
-        color: var(--th-main-color) !important;
-        animation: pulse-glow 3s infinite ease-in-out;
-        font-size: 20px;
-        line-height: 1.6;
+    > .e-con-inner > .elementor-shape-bottom {
+        pointer-events: none;
     }
 }
 
