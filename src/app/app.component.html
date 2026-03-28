@@ -46,16 +46,16 @@
                                 </ul>
                             </nav>
                         </div>
-                        <div class="side-menu-icon d-lg-none text-end">
-                            <a href="javascript:void(0)" class="info-toggle-btn f-right sidebar-toggle-btn"><i
-                                    class="fal fa-bars"></i></a>
-                        </div>
+
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-4 col-xs-2 col-5 button-mobile-version">
-                        <div class="menu-btns text-right">
+                        <div class="menu-btns text-right d-none d-lg-block">
                             <a href="wp-content/uploads/2024/11/Farouk%20Ahmed%20Full-Stack%20Developer.pdf"
                                 class="theme-btn" download target="_blank" rel="noopener noreferrer">Download cv<i
                                     class="ri-arrow-right-up-line"></i></a>
+                        </div>
+                        <div class="mobile-menu-toggle d-block d-lg-none" (click)="toggleMobileMenu()" style="cursor: pointer; font-size: 24px; color: #FFD700;">
+                            <i class="fas fa-bars"></i>
                         </div>
                     </div>
                 </div>
@@ -66,16 +66,26 @@
 <!-- // END MENU DESIGN AREA-->
 
 <!-- START MOBILE MENU DESIGN AREA-->
-<div class="sidebar__area">
+<div class="sidebar__area" [class.sidebar-opened]="isMobileMenuOpen">
     <div class="sidebar__wrapper">
         <div class="sidebar__close">
-            <button class="sidebar__close-btn" id="sidebar__close-btn">
-                <i class="fal fa-times"></i>
+            <button class="sidebar__close-btn" id="sidebar__close-btn" (click)="toggleMobileMenu()">
+                <i class="fas fa-times"></i>
             </button>
         </div>
         <div class="sidebar__content mt-50 mb-20">
-            <div class="mobile-menu fix"></div>
-            <div class="menu-btns menu-btn-mbl text-right">
+            <div class="mobile-menu fix">
+                <nav>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 15px;"><a href="#home" (click)="toggleMobileMenu()" style="color: #fff; font-size: 18px; text-decoration: none;">Home</a></li>
+                        <li style="margin-bottom: 15px;"><a href="#service" (click)="toggleMobileMenu()" style="color: #fff; font-size: 18px; text-decoration: none;">Services</a></li>
+                        <li style="margin-bottom: 15px;"><a href="#works" (click)="toggleMobileMenu()" style="color: #fff; font-size: 18px; text-decoration: none;">Creative Works</a></li>
+                        <li style="margin-bottom: 15px;"><a href="#about" (click)="toggleMobileMenu()" style="color: #fff; font-size: 18px; text-decoration: none;">About</a></li>
+                        <li style="margin-bottom: 15px;"><a href="#contact" (click)="toggleMobileMenu()" style="color: #fff; font-size: 18px; text-decoration: none;">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="menu-btns menu-btn-mbl text-right mt-4 mt-lg-0">
                 <a href="wp-content/uploads/2024/11/Farouk%20Ahmed%20Full-Stack%20Developer.pdf" class="theme-btn"
                     download target="_blank" rel="noopener noreferrer">Download cv<i
                         class="ri-arrow-right-up-line"></i></a>
@@ -83,7 +93,7 @@
         </div>
     </div>
 </div>
-<div class="body-overlay"></div>
+<div class="body-overlay" [class.opened]="isMobileMenuOpen" (click)="toggleMobileMenu()"></div>
 <!-- // END MOBILE MENU DESIGN AREA-->
 
 <div class="elementor elementor-58">

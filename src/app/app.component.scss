@@ -114,23 +114,41 @@
     }
 }
 
-/* Latest Creative Works — same outer image frame on every card (4:3), crop inner art */
+/* Latest Creative Works — Grid Layout Fix */
 .elementor-element-1c040a0 {
     > .e-con-inner {
-        align-items: stretch;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        column-gap: 30px !important;
+        row-gap: 50px !important;
+        align-items: stretch !important;
+        justify-content: center !important;
     }
 
     > .e-con-inner > .e-con-child {
         display: flex;
         flex-direction: column;
         min-width: 0;
+        width: calc(50% - 15px) !important;
+        margin: 0 !important;
+        box-sizing: border-box;
+        
+        @media (max-width: 768px) {
+            width: 100% !important;
+        }
+    }
+
+    .elementor-widget-image {
+        width: 100% !important;
     }
 
     .elementor-widget-image .portfolio-image-wrapper {
         aspect-ratio: 4 / 3;
         width: 100%;
         max-width: 100%;
+        min-height: 250px;
         flex-shrink: 0;
+        display: block;
     }
 
     .portfolio-image-wrapper > .portfolio-img {
@@ -384,3 +402,80 @@
         color: #FFD700 !important;
     }
 }
+
+/* Mobile Menu Toggle & Sidebar enhancements */
+.main-menu {
+    @media (max-width: 991px) {
+        display: none !important;
+    }
+}
+
+.button-mobile-version {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+}
+
+.sidebar__area {
+    position: fixed;
+    right: -320px;
+    top: 0;
+    width: 320px;
+    height: 100%;
+    background: #111;
+    z-index: 9999;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+    
+    &.sidebar-opened {
+        right: 0;
+    }
+    
+    .sidebar__wrapper {
+        padding: 40px;
+    }
+    
+    .sidebar__close {
+        text-align: right;
+        margin-bottom: 30px;
+        button {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            &:hover {
+                color: #FFD700;
+            }
+        }
+    }
+
+    .mobile-menu li a {
+        transition: color 0.3s ease;
+        &:hover {
+            color: #FFD700 !important;
+        }
+    }
+}
+
+.body-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 9998;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+    
+    &.opened {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+/* End of file */

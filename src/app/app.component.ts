@@ -56,6 +56,12 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   contactSubmitting = false;
   contactSuccess = false;
   contactError = '';
+  
+  isMobileMenuOpen = false;
+
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
 
   /** Latest Creative Works — first card: `public/.../proj-1/manifest.json`. */
   readonly proj1Base = 'wp-content/uploads/2024/Projects/proj-1/';
