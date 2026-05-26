@@ -518,208 +518,162 @@
         </div>
     </div>
 
-    <!-- LATEST CREATIVE WORKS HEADING -->
-    <section class="elementor-element elementor-element-d09e46b e-flex e-con-boxed e-con e-parent" data-id="d09e46b"
-        id="works">
-        <div class="e-con-inner">
-            <div
-                class="elementor-element elementor-element-db41d0d wow fadeInUp delay-0-4s elementor-widget elementor-widget-qi_addons_for_elementor_animated_text">
-                <div class="elementor-widget-container">
-                    <div
-                        class="qodef-shortcode qodef-m qodef-qi-animated-text qodef--animated-by-letter qodef-qi--has-appear qodef--appear-from-bottom">
-                        <h2 class="qodef-m-title"><span class="qodef-e-word-holder">Latest</span> <span
-                                class="qodef-e-word-holder">Creative</span> <span
-                                class="qodef-e-word-holder">Works</span></h2>
-                    </div>
-                </div>
+<!-- LATEST CREATIVE WORKS -->
+<section class="latest-works" id="works">
+    <div class="latest-works__container">
+        <div class="latest-works__header wow fadeInUp delay-0-4s">
+            <div class="qodef-shortcode qodef-m qodef-qi-animated-text qodef--animated-by-letter qodef-qi--has-appear qodef--appear-from-bottom">
+                <h2 class="qodef-m-title"><span class="qodef-e-word-holder">Latest</span> <span class="qodef-e-word-holder">Creative</span> <span class="qodef-e-word-holder">Works</span></h2>
             </div>
         </div>
-    </section>
 
-    <!-- CREATIVE WORKS GRID (4 items) -->
-    <section class="elementor-element elementor-element-1c040a0 e-flex e-con-boxed e-con e-parent" data-id="1c040a0"
-        data-settings="{&quot;shape_divider_bottom&quot;:&quot;curve&quot;,&quot;shape_divider_bottom_negative&quot;:&quot;yes&quot;}">
-        <div class="e-con-inner">
-            <div class="elementor-shape elementor-shape-bottom" data-negative="true">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
-                    <path class="elementor-shape-fill"
-                        d="M500,97C126.7,96.3,0.8,19.8,0,0v100l1000,0V1C1000,19.4,873.3,97.8,500,97z" />
-                </svg>
-            </div>
-            <div class="elementor-element elementor-element-225e1ec e-con-full e-flex e-con e-child">
-                <div class="elementor-element elementor-element-382809e elementor-widget elementor-widget-image">
-                    <div class="elementor-widget-container portfolio-image-wrapper portfolio-proj1-wrapper">
-                        @if (proj1Images.length > 0) {
-                        <div class="swiper portfolio-proj1-swiper" id="portfolio-proj1-swiper">
-                            <div class="swiper-wrapper">
-                                @for (src of proj1Images; track src; let idx = $index) {
-                                <div class="swiper-slide">
-                                    <img decoding="async" width="1200" height="900" [src]="src"
-                                        class="elementor-animation-skew attachment-full size-full portfolio-img"
-                                        [attr.alt]="'Design Pop — slide ' + (idx + 1)"
-                                        data-elementor-open-lightbox="no" />
-                                </div>
-                                }
+        <div class="latest-works__grid">
+            <!-- Card 1 — Academic Excellence -->
+            <article class="work-card">
+                <div class="work-card__image" data-gallery="proj1">
+                    @if (proj1Images.length > 0) {
+                    <div class="swiper" id="portfolio-proj1-swiper">
+                        <div class="swiper-wrapper">
+                            @for (src of proj1Images; track src; let idx = $index) {
+                            <div class="swiper-slide">
+                                <img decoding="async" width="1200" height="900" [src]="src"
+                                    class="work-card__img"
+                                    [attr.alt]="'Design Pop — slide ' + (idx + 1)"
+                                    data-elementor-open-lightbox="no" />
                             </div>
-                            @if (proj1Images.length > 1) {
-                            <div class="swiper-pagination portfolio-proj1-pagination"></div>
                             }
                         </div>
-                        <div class="portfolio-overlay">
-                            <a [href]="proj1Images[0]" class="portfolio-icon magnific-trigger"
-                                data-elementor-open-lightbox="no" aria-label="View Image">
-                                <i class="fas fa-search-plus"></i>
-                            </a>
-                            <a href="https://github.com/Farouk-Ahmed/Academic-Excellence" class="portfolio-icon"
-                                target="_blank" aria-label="GitHub Repository">
-                                <i class="fab fa-github"></i>
-                            </a>
-                        </div>
-                        @for (src of proj1Images; track src; let i = $index) {
-                        @if (i > 0) {
-                        <a [href]="src" class="magnific-trigger portfolio-proj1-magnific-sibling" tabindex="-1"
-                            aria-hidden="true"
-                            style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)"></a>
-                        }
-                        }
+                        @if (proj1Images.length > 1) {
+                        <div class="swiper-pagination work-card__pagination portfolio-proj1-pagination"></div>
                         }
                     </div>
+                    <div class="work-card__overlay">
+                        <a [href]="proj1Images[0]" class="work-card__icon work-card__gallery-item"
+                            data-elementor-open-lightbox="no" aria-label="View Image">
+                            <i class="fas fa-search-plus"></i>
+                        </a>
+                        <a href="https://github.com/Farouk-Ahmed/Academic-Excellence" class="work-card__icon"
+                            target="_blank" aria-label="GitHub Repository">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                    @for (src of proj1Images; track src; let i = $index) {
+                    @if (i > 0) {
+                    <a [href]="src" class="work-card__gallery-item" tabindex="-1"
+                        aria-hidden="true"
+                        style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)"></a>
+                    }
+                    }
+                    }
                 </div>
-                <div class="elementor-element elementor-element-e94c360 e-con-full e-flex e-con e-child">
-                    <div class="elementor-element elementor-element-8ebf42b elementor-widget elementor-widget-heading">
-                        <div class="elementor-widget-container">
-                            <h3 class="elementor-heading-title elementor-size-default">Academic Excellence</h3>
-                        </div>
-                    </div>
-                    <div
-                        class="elementor-element elementor-element-13ef72f elementor-widget elementor-widget-text-editor">
-                        <div class="elementor-widget-container">
-                            <p>Marketing site design and build</p>
-                        </div>
-                    </div>
+                <div class="work-card__body">
+                    <h3 class="work-card__title">Academic Excellence</h3>
+                    <p class="work-card__desc">Marketing site design and build</p>
+                </div>
+            </article>
 
-                </div>
-            </div>
-            <div class="elementor-element elementor-element-2cbe9ab e-con-full e-flex e-con e-child">
-                <div class="elementor-element elementor-element-7a63503 elementor-widget elementor-widget-image">
-                    <div class="elementor-widget-container portfolio-image-wrapper portfolio-proj2-wrapper">
-                        @if (proj2Images.length > 0) {
-                        <div class="swiper portfolio-proj2-swiper" id="portfolio-proj2-swiper">
-                            <div class="swiper-wrapper">
-                                @for (src of proj2Images; track src; let idx = $index) {
-                                <div class="swiper-slide">
-                                    <img loading="lazy" decoding="async" width="1200" height="900" [src]="src"
-                                        class="elementor-animation-skew attachment-full size-full portfolio-img"
-                                        [attr.alt]="'Mockup — slide ' + (idx + 1)" data-elementor-open-lightbox="no" />
-                                </div>
-                                }
+            <!-- Card 2 — FAO Blog -->
+            <article class="work-card">
+                <div class="work-card__image" data-gallery="proj2">
+                    @if (proj2Images.length > 0) {
+                    <div class="swiper" id="portfolio-proj2-swiper">
+                        <div class="swiper-wrapper">
+                            @for (src of proj2Images; track src; let idx = $index) {
+                            <div class="swiper-slide">
+                                <img loading="lazy" decoding="async" width="1200" height="900" [src]="src"
+                                    class="work-card__img"
+                                    [attr.alt]="'Mockup — slide ' + (idx + 1)"
+                                    data-elementor-open-lightbox="no" />
                             </div>
-                            @if (proj2Images.length > 1) {
-                            <div class="swiper-pagination portfolio-proj2-pagination"></div>
                             }
                         </div>
-                        <div class="portfolio-overlay">
-                            <a [href]="proj2Images[0]" class="portfolio-icon magnific-trigger"
-                                data-elementor-open-lightbox="no" aria-label="View Image">
-                                <i class="fas fa-search-plus"></i>
-                            </a>
-                            <a href="https://github.com/Farouk-Ahmed/FAO-Blog" class="portfolio-icon" target="_blank"
-                                aria-label="GitHub Repository">
-                                <i class="fab fa-github"></i>
-                            </a>
-                        </div>
-                        @for (src of proj2Images; track src; let i = $index) {
-                        @if (i > 0) {
-                        <a [href]="src" class="magnific-trigger portfolio-proj2-magnific-sibling" tabindex="-1"
-                            aria-hidden="true"
-                            style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)"></a>
-                        }
-                        }
+                        @if (proj2Images.length > 1) {
+                        <div class="swiper-pagination work-card__pagination portfolio-proj2-pagination"></div>
                         }
                     </div>
+                    <div class="work-card__overlay">
+                        <a [href]="proj2Images[0]" class="work-card__icon work-card__gallery-item"
+                            data-elementor-open-lightbox="no" aria-label="View Image">
+                            <i class="fas fa-search-plus"></i>
+                        </a>
+                        <a href="https://github.com/Farouk-Ahmed/FAO-Blog" class="work-card__icon"
+                            target="_blank" aria-label="GitHub Repository">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                    @for (src of proj2Images; track src; let i = $index) {
+                    @if (i > 0) {
+                    <a [href]="src" class="work-card__gallery-item" tabindex="-1"
+                        aria-hidden="true"
+                        style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)"></a>
+                    }
+                    }
+                    }
                 </div>
-                <div class="elementor-element elementor-element-990f559 e-con-full e-flex e-con e-child">
-                    <div class="elementor-element elementor-widget elementor-widget-heading">
-                        <div class="elementor-widget-container">
-                            <h3 class="elementor-heading-title elementor-size-default">FAO Blog</h3>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-widget elementor-widget-text-editor">
-                        <div class="elementor-widget-container">
-                            <p>Marketing site design and build</p>
-                        </div>
-                    </div>
+                <div class="work-card__body">
+                    <h3 class="work-card__title">FAO Blog</h3>
+                    <p class="work-card__desc">Marketing site design and build</p>
+                </div>
+            </article>
 
-                </div>
-            </div>
-            <div class="elementor-element elementor-element-22a5645 e-con-full e-flex e-con e-child">
-                <div class="elementor-element elementor-widget elementor-widget-image">
-                    <div class="elementor-widget-container portfolio-image-wrapper">
-                        <img loading="lazy" decoding="async" width="1200" height="900"
-                            src="wp-content/uploads/2024/11/work3-1.jpg"
-                            class="elementor-animation-skew attachment-full size-full portfolio-img" alt="work3"
-                            data-elementor-open-lightbox="no" />
-                        <div class="portfolio-overlay">
-                            <a href="wp-content/uploads/2024/11/work3-1.jpg" class="portfolio-icon magnific-trigger"
-                                data-elementor-open-lightbox="no" aria-label="View Image">
-                                <i class="fas fa-search-plus"></i>
-                            </a>
-                            <a href="https://github.com/Farouk-Ahmed?tab=repositories" class="portfolio-icon"
-                                target="_blank" aria-label="GitHub Repository">
-                                <i class="fab fa-github"></i>
-                            </a>
-                        </div>
+            <!-- Card 3 — Brand -->
+            <article class="work-card">
+                <div class="work-card__image" data-gallery="proj3">
+                    <img loading="lazy" decoding="async" width="1200" height="900"
+                        src="wp-content/uploads/2024/11/work3-1.jpg"
+                        class="work-card__img" alt="work3"
+                        data-elementor-open-lightbox="no" />
+                    <div class="work-card__overlay">
+                        <a href="wp-content/uploads/2024/11/work3-1.jpg" class="work-card__icon work-card__gallery-item"
+                            data-elementor-open-lightbox="no" aria-label="View Image">
+                            <i class="fas fa-search-plus"></i>
+                        </a>
+                        <a href="https://github.com/Farouk-Ahmed?tab=repositories" class="work-card__icon"
+                            target="_blank" aria-label="GitHub Repository">
+                            <i class="fab fa-github"></i>
+                        </a>
                     </div>
                 </div>
-                <div class="elementor-element elementor-element-bd03011 e-con-full e-flex e-con e-child">
-                    <div class="elementor-element elementor-widget elementor-widget-heading">
-                        <div class="elementor-widget-container">
-                            <h3 class="elementor-heading-title elementor-size-default">Brand</h3>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-widget elementor-widget-text-editor">
-                        <div class="elementor-widget-container">
-                            <p>Marketing site design and build</p>
-                        </div>
-                    </div>
+                <div class="work-card__body">
+                    <h3 class="work-card__title">Brand</h3>
+                    <p class="work-card__desc">Marketing site design and build</p>
+                </div>
+            </article>
 
-                </div>
-            </div>
-            <div class="elementor-element elementor-element-7d32009 e-con-full e-flex e-con e-child">
-                <div class="elementor-element elementor-widget elementor-widget-image">
-                    <div class="elementor-widget-container portfolio-image-wrapper">
-                        <img loading="lazy" decoding="async" width="1200" height="900"
-                            src="wp-content/uploads/2024/11/work4-1.jpg"
-                            class="elementor-animation-skew attachment-full size-full portfolio-img" alt="work4"
-                            data-elementor-open-lightbox="no" />
-                        <div class="portfolio-overlay">
-                            <a href="wp-content/uploads/2024/11/work4-1.jpg" class="portfolio-icon magnific-trigger"
-                                data-elementor-open-lightbox="no" aria-label="View Image">
-                                <i class="fas fa-search-plus"></i>
-                            </a>
-                            <a href="https://github.com/Farouk-Ahmed?tab=repositories" class="portfolio-icon"
-                                target="_blank" aria-label="GitHub Repository">
-                                <i class="fab fa-github"></i>
-                            </a>
-                        </div>
+            <!-- Card 4 — Website -->
+            <article class="work-card">
+                <div class="work-card__image" data-gallery="proj4">
+                    <img loading="lazy" decoding="async" width="1200" height="900"
+                        src="wp-content/uploads/2024/11/work4-1.jpg"
+                        class="work-card__img" alt="work4"
+                        data-elementor-open-lightbox="no" />
+                    <div class="work-card__overlay">
+                        <a href="wp-content/uploads/2024/11/work4-1.jpg" class="work-card__icon work-card__gallery-item"
+                            data-elementor-open-lightbox="no" aria-label="View Image">
+                            <i class="fas fa-search-plus"></i>
+                        </a>
+                        <a href="https://github.com/Farouk-Ahmed?tab=repositories" class="work-card__icon"
+                            target="_blank" aria-label="GitHub Repository">
+                            <i class="fab fa-github"></i>
+                        </a>
                     </div>
                 </div>
-                <div class="elementor-element elementor-element-18ef182 e-con-full e-flex e-con e-child">
-                    <div class="elementor-element elementor-widget elementor-widget-heading">
-                        <div class="elementor-widget-container">
-                            <h3 class="elementor-heading-title elementor-size-default">Website</h3>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-widget elementor-widget-text-editor">
-                        <div class="elementor-widget-container">
-                            <p>Marketing site design and build</p>
-                        </div>
-                    </div>
-
+                <div class="work-card__body">
+                    <h3 class="work-card__title">Website</h3>
+                    <p class="work-card__desc">Marketing site design and build</p>
                 </div>
-            </div>
+            </article>
         </div>
-    </section>
+    </div>
+
+    <div class="latest-works__divider" data-negative="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+            <path class="latest-works__divider-fill"
+                d="M500,97C126.7,96.3,0.8,19.8,0,0v100l1000,0V1C1000,19.4,873.3,97.8,500,97z" />
+        </svg>
+    </div>
+</section>
+
 
 
     <!-- ABOUT SECTION (id=about) -->
@@ -887,31 +841,60 @@
                         d="M500,97C126.7,96.3,0.8,19.8,0,0v100l1000,0V1C1000,19.4,873.3,97.8,500,97z" />
                 </svg>
             </div>
-            <div class="elementor-element elementor-element-f87f72f e-con-full e-flex e-con e-child">
+            <div class="elementor-element e-con-full e-flex e-con e-child skill-item">
                 <div class="elementor-element elementor-widget elementor-widget-image">
-                    <div class="elementor-widget-container"><img loading="lazy" decoding="async" width="55" height="55"
-                            src="wp-content/uploads/2024/11/skill1.png" class="attachment-full size-full" alt="" />
+                    <div class="elementor-widget-container icon-container">
+                        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <ellipse cx="28" cy="16" rx="16" ry="7" stroke="#FFD700" stroke-width="2" fill="none"/>
+                            <path d="M12 16v10c0 3.9 7.2 7 16 7s16-3.1 16-7V16" stroke="#FFD700" stroke-width="2" fill="none"/>
+                            <path d="M12 26v10c0 3.9 7.2 7 16 7s16-3.1 16-7V26" stroke="#FFD700" stroke-width="2" fill="none"/>
+                        </svg>
                     </div>
                 </div>
                 <div class="elementor-element elementor-widget elementor-widget-heading">
                     <div class="elementor-widget-container">
-                        <h3 class="elementor-heading-title elementor-size-default">Figma</h3>
+                        <h3 class="elementor-heading-title elementor-size-default">Databases</h3>
                     </div>
                 </div>
             </div>
-            <div class="elementor-element elementor-element-a60e144 e-con-full e-flex e-con e-child">
+            <div class="elementor-element e-con-full e-flex e-con e-child skill-item">
                 <div class="elementor-element elementor-widget elementor-widget-image">
-                    <div class="elementor-widget-container"><img loading="lazy" decoding="async" width="55" height="55"
-                            src="wp-content/uploads/2024/11/skill6.png" class="attachment-full size-full" alt="" />
+                    <div class="elementor-widget-container icon-container">
+                        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="12" width="36" height="25" rx="3" stroke="#FFD700" stroke-width="2" fill="none"/>
+                            <line x1="10" y1="28" x2="46" y2="28" stroke="#FFD700" stroke-width="2"/>
+                            <rect x="23" y="37" width="10" height="5" rx="1" fill="#FFD700"/>
+                            <line x1="10" y1="37" x2="18" y2="37" stroke="#FFD700" stroke-width="2"/>
+                            <line x1="38" y1="37" x2="46" y2="37" stroke="#FFD700" stroke-width="2"/>
+                        </svg>
                     </div>
                 </div>
                 <div class="elementor-element elementor-widget elementor-widget-heading">
                     <div class="elementor-widget-container">
-                        <h3 class="elementor-heading-title elementor-size-default">Webflow</h3>
+                        <h3 class="elementor-heading-title elementor-size-default">UI & UX</h3>
                     </div>
                 </div>
             </div>
-            <div class="elementor-element elementor-element-4b367e1 e-con-full e-flex e-con e-child">
+            <div class="elementor-element e-con-full e-flex e-con e-child skill-item">
+                <div class="elementor-element elementor-widget elementor-widget-image">
+                    <div class="elementor-widget-container icon-container">
+                        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="11" width="36" height="10" rx="2.5" stroke="#FFD700" stroke-width="2" fill="none"/>
+                            <rect x="10" y="23" width="36" height="10" rx="2.5" stroke="#FFD700" stroke-width="2" fill="none"/>
+                            <rect x="10" y="35" width="36" height="10" rx="2.5" stroke="#FFD700" stroke-width="2" fill="none"/>
+                            <circle cx="18" cy="16" r="2" fill="#FFD700"/>
+                            <circle cx="18" cy="28" r="2" fill="#FFD700"/>
+                            <circle cx="18" cy="40" r="2" fill="#FFD700"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="elementor-element elementor-widget elementor-widget-heading">
+                    <div class="elementor-widget-container">
+                        <h3 class="elementor-heading-title elementor-size-default">Servers</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="elementor-element elementor-element-4b367e1 e-con-full e-flex e-con e-child skill-item">
                 <div class="elementor-element elementor-widget elementor-widget-image">
                     <div class="elementor-widget-container"><img loading="lazy" decoding="async" width="55" height="55"
                             src="wp-content/uploads/2024/11/skill5.png" class="attachment-full size-full" alt="" />
@@ -923,7 +906,7 @@
                     </div>
                 </div>
             </div>
-            <div class="elementor-element elementor-element-d483091 e-con-full e-flex e-con e-child">
+            <div class="elementor-element elementor-element-d483091 e-con-full e-flex e-con e-child skill-item">
                 <div class="elementor-element elementor-widget elementor-widget-image">
                     <div class="elementor-widget-container"><img loading="lazy" decoding="async" width="55" height="55"
                             src="wp-content/uploads/2024/11/skill3.png" class="attachment-full size-full" alt="" />
@@ -935,7 +918,7 @@
                     </div>
                 </div>
             </div>
-            <div class="elementor-element elementor-element-cd167cb e-con-full e-flex e-con e-child">
+            <div class="elementor-element elementor-element-cd167cb e-con-full e-flex e-con e-child skill-item">
                 <div class="elementor-element elementor-widget elementor-widget-image">
                     <div class="elementor-widget-container"><img loading="lazy" decoding="async" width="55" height="55"
                             src="wp-content/uploads/2024/11/skill8.png" class="attachment-full size-full" alt="" />
@@ -947,7 +930,7 @@
                     </div>
                 </div>
             </div>
-            <div class="elementor-element elementor-element-48c8b15 e-con-full e-flex e-con e-child">
+            <div class="elementor-element elementor-element-48c8b15 e-con-full e-flex e-con e-child skill-item">
                 <div class="elementor-element elementor-widget elementor-widget-image">
                     <div class="elementor-widget-container"><img loading="lazy" decoding="async" width="55" height="55"
                             src="wp-content/uploads/2024/11/skill7.jpg" class="attachment-full size-full" alt="" />
@@ -955,7 +938,7 @@
                 </div>
                 <div class="elementor-element elementor-widget elementor-widget-heading">
                     <div class="elementor-widget-container">
-                        <h3 class="elementor-heading-title elementor-size-default"> C#</h3>
+                        <h3 class="elementor-heading-title elementor-size-default">C#</h3>
                     </div>
                 </div>
             </div>

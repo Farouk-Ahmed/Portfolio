@@ -23,7 +23,7 @@ interface JQueryLike {
 /** Globals from index.html (jQuery, Qi Addons, WOW). */
 declare global {
   interface Window {
-    jQuery?: (selector: string) => JQueryLike;
+    jQuery?: ((selector: string) => JQueryLike) & ((element: Element) => JQueryLike);
     qodefAddonsCore?: {
       qodefAppear?: { init: () => void };
       shortcodes?: Record<
@@ -238,28 +238,33 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         }).init();
       }
 
-      // Initialize Magnific Popup for portfolio gallery
-      const portfolioIcons = $('.magnific-trigger');
-      if (portfolioIcons.length && typeof (portfolioIcons as any).magnificPopup === 'function') {
-        (portfolioIcons as any).magnificPopup({
-          type: 'image',
-          gallery: {
-            enabled: true,
-            navigateByImgClick: true,
-            preload: [0, 1]
-          },
-          mainClass: 'mfp-fade-scale mfp-custom-rounded',
-          removalDelay: 300, // delay for animation
-          fixedContentPos: false, // Prevents locking the background scroll
-          closeOnBgClick: true,
-          closeBtnInside: true,
-          image: {
-            titleSrc: function (item: any) {
-              return item.el.attr('aria-label') || '';
+      // Initialize Magnific Popup separately per gallery group
+      const galleries = document.querySelectorAll('[data-gallery]');
+      galleries.forEach(function (galleryEl) {
+        const $gallery = $(galleryEl as HTMLElement) as any;
+        const items = $gallery.find('.work-card__gallery-item');
+        if (items.length && typeof $gallery.magnificPopup === 'function') {
+          $gallery.magnificPopup({
+            delegate: '.work-card__gallery-item',
+            type: 'image',
+            gallery: {
+              enabled: true,
+              navigateByImgClick: true,
+              preload: [0, 1]
+            },
+            mainClass: 'mfp-fade-scale mfp-custom-rounded',
+            removalDelay: 300,
+            fixedContentPos: false,
+            closeOnBgClick: true,
+            closeBtnInside: true,
+            image: {
+              titleSrc: function (item: any) {
+                return item.el.attr('aria-label') || '';
+              }
             }
-          }
-        });
-      }
+          });
+        }
+      });
 
       const SwiperCtor = w.Swiper;
       const swiperEl1 = document.getElementById('portfolio-proj1-swiper');
