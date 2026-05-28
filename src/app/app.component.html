@@ -528,80 +528,36 @@
         </div>
 
         <div class="latest-works__grid">
-            <!-- Card 1 — Academic Excellence -->
+            @for (work of works; track work.galleryId) {
             <article class="work-card">
-                <div class="work-card__image" data-gallery="proj1">
-                    @if (proj1Images.length > 0) {
-                    <div class="swiper" id="portfolio-proj1-swiper">
+                <div class="work-card__image" [attr.data-gallery]="work.galleryId">
+                    @if (work.images.length > 0) {
+                    <div class="swiper" [id]="work.swiperId">
                         <div class="swiper-wrapper">
-                            @for (src of proj1Images; track src; let idx = $index) {
-                            <div class="swiper-slide">
-                                <img decoding="async" width="1200" height="900" [src]="src"
-                                    class="work-card__img"
-                                    [attr.alt]="'Design Pop — slide ' + (idx + 1)"
-                                    data-elementor-open-lightbox="no" />
-                            </div>
-                            }
-                        </div>
-                        @if (proj1Images.length > 1) {
-                        <div class="swiper-pagination work-card__pagination portfolio-proj1-pagination"></div>
-                        }
-                    </div>
-                    <div class="work-card__overlay">
-                        <a [href]="proj1Images[0]" class="work-card__icon work-card__gallery-item"
-                            data-elementor-open-lightbox="no" aria-label="View Image">
-                            <i class="fas fa-search-plus"></i>
-                        </a>
-                        <a href="https://github.com/Farouk-Ahmed/Academic-Excellence" class="work-card__icon"
-                            target="_blank" aria-label="GitHub Repository">
-                            <i class="fab fa-github"></i>
-                        </a>
-                    </div>
-                    @for (src of proj1Images; track src; let i = $index) {
-                    @if (i > 0) {
-                    <a [href]="src" class="work-card__gallery-item" tabindex="-1"
-                        aria-hidden="true"
-                        style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)"></a>
-                    }
-                    }
-                    }
-                </div>
-                <div class="work-card__body">
-                    <h3 class="work-card__title">Academic Excellence</h3>
-                    <p class="work-card__desc">Marketing site design and build</p>
-                </div>
-            </article>
-
-            <!-- Card 2 — FAO Blog -->
-            <article class="work-card">
-                <div class="work-card__image" data-gallery="proj2">
-                    @if (proj2Images.length > 0) {
-                    <div class="swiper" id="portfolio-proj2-swiper">
-                        <div class="swiper-wrapper">
-                            @for (src of proj2Images; track src; let idx = $index) {
+                            @for (src of work.images; track src; let idx = $index) {
                             <div class="swiper-slide">
                                 <img loading="lazy" decoding="async" width="1200" height="900" [src]="src"
                                     class="work-card__img"
-                                    [attr.alt]="'Mockup — slide ' + (idx + 1)"
+                                    [attr.alt]="work.title + ' — slide ' + (idx + 1)"
                                     data-elementor-open-lightbox="no" />
                             </div>
                             }
                         </div>
-                        @if (proj2Images.length > 1) {
-                        <div class="swiper-pagination work-card__pagination portfolio-proj2-pagination"></div>
+                        @if (work.images.length > 1) {
+                        <div class="swiper-pagination work-card__pagination {{ work.paginationClass }}"></div>
                         }
                     </div>
                     <div class="work-card__overlay">
-                        <a [href]="proj2Images[0]" class="work-card__icon work-card__gallery-item"
+                        <a [href]="work.images[0]" class="work-card__icon work-card__gallery-item"
                             data-elementor-open-lightbox="no" aria-label="View Image">
                             <i class="fas fa-search-plus"></i>
                         </a>
-                        <a href="https://github.com/Farouk-Ahmed/FAO-Blog" class="work-card__icon"
+                        <a [href]="work.githubUrl" class="work-card__icon"
                             target="_blank" aria-label="GitHub Repository">
                             <i class="fab fa-github"></i>
                         </a>
                     </div>
-                    @for (src of proj2Images; track src; let i = $index) {
+                    @for (src of work.images; track src; let i = $index) {
                     @if (i > 0) {
                     <a [href]="src" class="work-card__gallery-item" tabindex="-1"
                         aria-hidden="true"
@@ -611,58 +567,11 @@
                     }
                 </div>
                 <div class="work-card__body">
-                    <h3 class="work-card__title">FAO Blog</h3>
-                    <p class="work-card__desc">Marketing site design and build</p>
+                    <h3 class="work-card__title">{{ work.title }}</h3>
+                    <p class="work-card__desc">{{ work.description }}</p>
                 </div>
             </article>
-
-            <!-- Card 3 — Brand -->
-            <article class="work-card">
-                <div class="work-card__image" data-gallery="proj3">
-                    <img loading="lazy" decoding="async" width="1200" height="900"
-                        src="wp-content/uploads/2024/11/work3-1.jpg"
-                        class="work-card__img" alt="work3"
-                        data-elementor-open-lightbox="no" />
-                    <div class="work-card__overlay">
-                        <a href="wp-content/uploads/2024/11/work3-1.jpg" class="work-card__icon work-card__gallery-item"
-                            data-elementor-open-lightbox="no" aria-label="View Image">
-                            <i class="fas fa-search-plus"></i>
-                        </a>
-                        <a href="https://github.com/Farouk-Ahmed?tab=repositories" class="work-card__icon"
-                            target="_blank" aria-label="GitHub Repository">
-                            <i class="fab fa-github"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="work-card__body">
-                    <h3 class="work-card__title">Brand</h3>
-                    <p class="work-card__desc">Marketing site design and build</p>
-                </div>
-            </article>
-
-            <!-- Card 4 — Website -->
-            <article class="work-card">
-                <div class="work-card__image" data-gallery="proj4">
-                    <img loading="lazy" decoding="async" width="1200" height="900"
-                        src="wp-content/uploads/2024/11/work4-1.jpg"
-                        class="work-card__img" alt="work4"
-                        data-elementor-open-lightbox="no" />
-                    <div class="work-card__overlay">
-                        <a href="wp-content/uploads/2024/11/work4-1.jpg" class="work-card__icon work-card__gallery-item"
-                            data-elementor-open-lightbox="no" aria-label="View Image">
-                            <i class="fas fa-search-plus"></i>
-                        </a>
-                        <a href="https://github.com/Farouk-Ahmed?tab=repositories" class="work-card__icon"
-                            target="_blank" aria-label="GitHub Repository">
-                            <i class="fab fa-github"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="work-card__body">
-                    <h3 class="work-card__title">Website</h3>
-                    <p class="work-card__desc">Marketing site design and build</p>
-                </div>
-            </article>
+            }
         </div>
     </div>
 

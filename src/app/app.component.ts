@@ -20,6 +20,31 @@ interface JQueryLike {
   first(): JQueryLike;
 }
 
+/** Swiper instance subset we interact with. */
+interface SwiperInstance {
+  destroy: (deleteInstance?: boolean, cleanStyle?: boolean) => void;
+}
+
+/** A single "Latest Creative Works" card backed by a `proj-N/manifest.json`. */
+interface WorkProject {
+  /** Public path prefix, e.g. `wp-content/uploads/2024/Projects/proj-1/`. */
+  base: string;
+  title: string;
+  description: string;
+  githubUrl: string;
+  /** Unique id for the swiper element, e.g. `portfolio-proj1-swiper`. */
+  swiperId: string;
+  /** Pagination element class, e.g. `portfolio-proj1-pagination`. */
+  paginationClass: string;
+  /** Magnific gallery group key, e.g. `proj1`. */
+  galleryId: string;
+  /** Fallback image shown when the manifest is empty/missing. */
+  fallback: string;
+  /** Resolved, sanitized image URLs from the manifest. */
+  images: string[];
+  swiper: SwiperInstance | null;
+}
+
 /** Globals from index.html (jQuery, Qi Addons, WOW). */
 declare global {
   interface Window {
@@ -63,23 +88,67 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
 
-  /** Latest Creative Works — first card: `public/.../proj-1/manifest.json`. */
-  readonly proj1Base = 'wp-content/uploads/2024/Projects/proj-1/';
-  proj1Images: string[] = [];
-
-  /** Latest Creative Works — second card: `public/.../proj-2/manifest.json`. */
-  readonly proj2Base = 'wp-content/uploads/2024/Projects/proj-2/';
-  proj2Images: string[] = [];
+  /** Latest Creative Works — each card is an independent `proj-N` folder. */
+  readonly works: WorkProject[] = [
+    {
+      base: 'wp-content/uploads/2024/Projects/proj-1/',
+      title: 'Academic Excellence',
+      description:
+        'A comprehensive school management platform connecting teachers, students, and parents in one place. Features role-based access with tailored permissions for every user, plus a powerful dashboard for tracking academic progress and daily operations.',
+      githubUrl: 'https://github.com/Farouk-Ahmed/Academic-Excellence',
+      swiperId: 'portfolio-proj1-swiper',
+      paginationClass: 'portfolio-proj1-pagination',
+      galleryId: 'proj1',
+      fallback: 'wp-content/uploads/2024/11/work1-1.jpg',
+      images: [],
+      swiper: null
+    },
+    {
+      base: 'wp-content/uploads/2024/Projects/proj-2/',
+      title: 'FAO Blog',
+      description:
+        'A modern technology blog for discovering and sharing the latest in tech. Backed by an intuitive admin dashboard that makes publishing articles and managing content and users effortless.',
+      githubUrl: 'https://github.com/Farouk-Ahmed/FAO-Blog',
+      swiperId: 'portfolio-proj2-swiper',
+      paginationClass: 'portfolio-proj2-pagination',
+      galleryId: 'proj2',
+      fallback: 'wp-content/uploads/2024/11/work2-1.jpg',
+      images: [],
+      swiper: null
+    },
+    {
+      base: 'wp-content/uploads/2024/Projects/proj-3/',
+      title: 'FAO E-commerce',
+      description:
+        'An e-commerce storefront for computers, tech gadgets, and accessories. Features a scroll-driven product showcase, category filters, and interactive flip cards with light and dark theming for a premium shopping experience.',
+      githubUrl: 'https://github.com/Farouk-Ahmed/-E-commerce',
+      swiperId: 'portfolio-proj3-swiper',
+      paginationClass: 'portfolio-proj3-pagination',
+      galleryId: 'proj3',
+      fallback: 'wp-content/uploads/2024/11/work3-1.jpg',
+      images: [],
+      swiper: null
+    },
+    {
+      base: 'wp-content/uploads/2024/Projects/proj-4/',
+      title: 'FAO Books Store',
+      description:
+        'An online store for technology and programming books, featuring a dark neumorphic UI, full Arabic/English support with RTL switching, a live shopping cart, and a Web3 wallet connection at checkout.',
+      githubUrl: 'https://github.com/Farouk-Ahmed/FAO-Books-Store',
+      swiperId: 'portfolio-proj4-swiper',
+      paginationClass: 'portfolio-proj4-pagination',
+      galleryId: 'proj4',
+      fallback: 'wp-content/uploads/2024/11/work4-1.jpg',
+      images: [],
+      swiper: null
+    }
+  ];
 
   private readonly formSubmitAjaxUrl = 'https://formsubmit.co/ajax/faroukola99@gmail.com';
   private readonly http = inject(HttpClient);
   private readonly platformId = inject(PLATFORM_ID);
   private wowInitialized = false;
   private qiCounterInited = false;
-  private proj1Swiper: { destroy: (deleteInstance?: boolean, cleanStyle?: boolean) => void } | null =
-    null;
-  private proj2Swiper: { destroy: (deleteInstance?: boolean, cleanStyle?: boolean) => void } | null =
-    null;
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -162,29 +231,26 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         )
         .map((f) => base + f);
 
-    forkJoin({
-      proj1: this.http.get<string[]>(`${this.proj1Base}manifest.json`).pipe(
+    const requests = this.works.map((work) =>
+      this.http.get<string[]>(`${work.base}manifest.json`).pipe(
         catchError(() => of([] as string[])),
-        map((files) => toUrls(files, this.proj1Base))
-      ),
-      proj2: this.http.get<string[]>(`${this.proj2Base}manifest.json`).pipe(
-        catchError(() => of([] as string[])),
-        map((files) => toUrls(files, this.proj2Base))
+        map((files) => toUrls(files, work.base))
       )
-    }).subscribe(({ proj1, proj2 }) => {
-      this.proj1Images =
-        proj1.length > 0 ? proj1 : ['wp-content/uploads/2024/11/work1-1.jpg'];
-      this.proj2Images =
-        proj2.length > 0 ? proj2 : ['wp-content/uploads/2024/11/work2-1.jpg'];
+    );
+
+    forkJoin(requests).subscribe((results) => {
+      results.forEach((images, i) => {
+        this.works[i].images = images.length > 0 ? images : [this.works[i].fallback];
+      });
       setTimeout(() => this.reinitMonoAndQiScripts(), 0);
     });
   }
 
   ngOnDestroy(): void {
-    this.proj1Swiper?.destroy(true, true);
-    this.proj1Swiper = null;
-    this.proj2Swiper?.destroy(true, true);
-    this.proj2Swiper = null;
+    this.works.forEach((work) => {
+      work.swiper?.destroy(true, true);
+      work.swiper = null;
+    });
   }
 
   ngAfterViewInit(): void {
@@ -267,34 +333,24 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       const SwiperCtor = w.Swiper;
-      const swiperEl1 = document.getElementById('portfolio-proj1-swiper');
-      if (SwiperCtor && swiperEl1 && this.proj1Images.length > 0) {
-        this.proj1Swiper?.destroy(true, true);
-        this.proj1Swiper = null;
-        const paginationEl = swiperEl1.querySelector('.portfolio-proj1-pagination');
-        const opt1: Record<string, unknown> = {
-          loop: this.proj1Images.length > 1,
-          speed: 500
-        };
-        if (paginationEl && this.proj1Images.length > 1) {
-          opt1['pagination'] = { el: paginationEl, clickable: true };
-        }
-        this.proj1Swiper = new SwiperCtor(swiperEl1, opt1);
-      }
-
-      const swiperEl2 = document.getElementById('portfolio-proj2-swiper');
-      if (SwiperCtor && swiperEl2 && this.proj2Images.length > 0) {
-        this.proj2Swiper?.destroy(true, true);
-        this.proj2Swiper = null;
-        const paginationEl2 = swiperEl2.querySelector('.portfolio-proj2-pagination');
-        const opt2: Record<string, unknown> = {
-          loop: this.proj2Images.length > 1,
-          speed: 500
-        };
-        if (paginationEl2 && this.proj2Images.length > 1) {
-          opt2['pagination'] = { el: paginationEl2, clickable: true };
-        }
-        this.proj2Swiper = new SwiperCtor(swiperEl2, opt2);
+      if (SwiperCtor) {
+        this.works.forEach((work) => {
+          const swiperEl = document.getElementById(work.swiperId);
+          if (!swiperEl || work.images.length === 0) {
+            return;
+          }
+          work.swiper?.destroy(true, true);
+          work.swiper = null;
+          const paginationEl = swiperEl.querySelector(`.${work.paginationClass}`);
+          const opt: Record<string, unknown> = {
+            loop: work.images.length > 1,
+            speed: 500
+          };
+          if (paginationEl && work.images.length > 1) {
+            opt['pagination'] = { el: paginationEl, clickable: true };
+          }
+          work.swiper = new SwiperCtor(swiperEl, opt);
+        });
       }
     } catch (e) {
       console.warn('reinitMonoAndQiScripts:', e);
