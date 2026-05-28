@@ -529,34 +529,67 @@
 
         <div class="latest-works__grid">
             @for (work of works; track work.galleryId) {
-            <article class="work-card">
-                <div class="work-card__image" [attr.data-gallery]="work.galleryId">
-                    @if (work.images.length > 0) {
-                    <div class="swiper" [id]="work.swiperId">
-                        <div class="swiper-wrapper">
-                            @for (src of work.images; track src; let idx = $index) {
-                            <div class="swiper-slide">
-                                <img loading="lazy" decoding="async" width="1200" height="900" [src]="src"
-                                    class="work-card__img"
-                                    [attr.alt]="work.title + ' — slide ' + (idx + 1)"
-                                    data-elementor-open-lightbox="no" />
+            <article class="work-card" [attr.data-gallery]="work.galleryId"
+                (click)="toggleWorkCardFlip($event)">
+                <div class="work-card__flip">
+                    <div class="work-card__front">
+                        <div class="work-card__image">
+                            @if (work.images.length > 0) {
+                            <div class="swiper" [id]="work.swiperId">
+                                <div class="swiper-wrapper">
+                                    @for (src of work.images; track src; let idx = $index) {
+                                    <div class="swiper-slide">
+                                        <img loading="lazy" decoding="async" width="1200" height="900" [src]="src"
+                                            class="work-card__img"
+                                            [attr.alt]="work.title + ' — slide ' + (idx + 1)"
+                                            data-elementor-open-lightbox="no" />
+                                    </div>
+                                    }
+                                </div>
+                                @if (work.images.length > 1) {
+                                <div class="swiper-pagination work-card__pagination {{ work.paginationClass }}"></div>
+                                }
                             </div>
                             }
                         </div>
-                        @if (work.images.length > 1) {
-                        <div class="swiper-pagination work-card__pagination {{ work.paginationClass }}"></div>
-                        }
+                        <div class="work-card__body">
+                            <h3 class="work-card__title">{{ work.title }}</h3>
+                            <p class="work-card__desc">{{ work.description }}</p>
+                        </div>
                     </div>
-                    <div class="work-card__overlay">
-                        <a [href]="work.images[0]" class="work-card__icon work-card__gallery-item"
-                            data-elementor-open-lightbox="no" aria-label="View Image">
-                            <i class="fas fa-search-plus"></i>
-                        </a>
-                        <a [href]="work.githubUrl" class="work-card__icon"
-                            target="_blank" aria-label="GitHub Repository">
-                            <i class="fab fa-github"></i>
-                        </a>
+
+                    <div class="work-card__back">
+                        <h3 class="work-card__back-title">{{ work.title }}</h3>
+                        <div class="work-card__actions">
+                            <a [href]="work.images[0]" class="work-card__action work-card__gallery-item"
+                                data-elementor-open-lightbox="no" aria-label="View project gallery">
+                                <span class="work-card__action-icon"><i class="fas fa-search-plus"></i></span>
+                                <span class="work-card__action-label">View Gallery</span>
+                            </a>
+                            <a [href]="work.githubUrl" class="work-card__action"
+                                (click)="openExternalUrl($event, work.githubUrl)"
+                                target="_blank" rel="noopener noreferrer"
+                                aria-label="Open GitHub repository">
+                                <span class="work-card__action-icon"><i class="fab fa-github"></i></span>
+                                <span class="work-card__action-label">GitHub</span>
+                            </a>
+                            <a [href]="work.websiteUrl || '#'" class="work-card__action"
+                                [class.work-card__action--pending]="!work.websiteUrl"
+                                (click)="openExternalUrl($event, work.websiteUrl)"
+                                [attr.aria-disabled]="!work.websiteUrl ? true : null"
+                                [attr.aria-label]="work.websiteLabel || 'Visit live website'">
+                                <span class="work-card__action-icon">
+                                    @if (work.websiteIcon) {
+                                    <img [src]="work.websiteIcon" alt="" class="work-card__action-img" />
+                                    } @else {
+                                    <i class="fas fa-globe"></i>
+                                    }
+                                </span>
+                                <span class="work-card__action-label">{{ work.websiteLabel || 'Visit Website' }}</span>
+                            </a>
+                        </div>
                     </div>
+
                     @for (src of work.images; track src; let i = $index) {
                     @if (i > 0) {
                     <a [href]="src" class="work-card__gallery-item" tabindex="-1"
@@ -564,11 +597,6 @@
                         style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)"></a>
                     }
                     }
-                    }
-                </div>
-                <div class="work-card__body">
-                    <h3 class="work-card__title">{{ work.title }}</h3>
-                    <p class="work-card__desc">{{ work.description }}</p>
                 </div>
             </article>
             }

@@ -32,6 +32,12 @@ interface WorkProject {
   title: string;
   description: string;
   githubUrl: string;
+  /** Live demo URL — empty until configured. */
+  websiteUrl: string;
+  /** Optional label for the website action (defaults to "Visit Website"). */
+  websiteLabel?: string;
+  /** Optional icon/thumbnail for the website action. */
+  websiteIcon?: string;
   /** Unique id for the swiper element, e.g. `portfolio-proj1-swiper`. */
   swiperId: string;
   /** Pagination element class, e.g. `portfolio-proj1-pagination`. */
@@ -96,6 +102,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       description:
         'A comprehensive school management platform connecting teachers, students, and parents in one place. Features role-based access with tailored permissions for every user, plus a powerful dashboard for tracking academic progress and daily operations.',
       githubUrl: 'https://github.com/Farouk-Ahmed/Academic-Excellence',
+      websiteUrl: '',
       swiperId: 'portfolio-proj1-swiper',
       paginationClass: 'portfolio-proj1-pagination',
       galleryId: 'proj1',
@@ -109,6 +116,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       description:
         'A modern technology blog for discovering and sharing the latest in tech. Backed by an intuitive admin dashboard that makes publishing articles and managing content and users effortless.',
       githubUrl: 'https://github.com/Farouk-Ahmed/FAO-Blog',
+      websiteUrl: '',
       swiperId: 'portfolio-proj2-swiper',
       paginationClass: 'portfolio-proj2-pagination',
       galleryId: 'proj2',
@@ -122,6 +130,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       description:
         'An e-commerce storefront for computers, tech gadgets, and accessories. Features a scroll-driven product showcase, category filters, and interactive flip cards with light and dark theming for a premium shopping experience.',
       githubUrl: 'https://github.com/Farouk-Ahmed/-E-commerce',
+      websiteUrl: '',
       swiperId: 'portfolio-proj3-swiper',
       paginationClass: 'portfolio-proj3-pagination',
       galleryId: 'proj3',
@@ -131,10 +140,13 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     },
     {
       base: 'wp-content/uploads/2024/Projects/proj-4/',
-      title: 'FAO Books Store',
+      title: 'FAO Books',
       description:
         'An online store for technology and programming books, featuring a dark neumorphic UI, full Arabic/English support with RTL switching, a live shopping cart, and a Web3 wallet connection at checkout.',
       githubUrl: 'https://github.com/Farouk-Ahmed/FAO-Books-Store',
+      websiteUrl: 'https://fao-books-store.vercel.app/',
+      websiteLabel: 'FAO Books',
+      websiteIcon: 'wp-content/uploads/2024/Projects/proj-4/home.jpeg',
       swiperId: 'portfolio-proj4-swiper',
       paginationClass: 'portfolio-proj4-pagination',
       galleryId: 'proj4',
@@ -157,6 +169,26 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /** Opens external project links reliably (avoids 3D flip hit-testing issues). */
+  openExternalUrl(event: Event, url: string): void {
+    if (!url) {
+      event.preventDefault();
+      return;
+    }
+    event.preventDefault();
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+
+  /** Toggle flip on tap for touch devices. */
+  toggleWorkCardFlip(event: Event): void {
+    const target = event.target as HTMLElement;
+    if (target.closest('.work-card__action')) {
+      return;
+    }
+    const card = (event.currentTarget as HTMLElement).closest('.work-card');
+    card?.classList.toggle('is-flipped');
   }
 
   /**
