@@ -130,7 +130,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       description:
         'An e-commerce storefront for computers, tech gadgets, and accessories. Features a scroll-driven product showcase, category filters, and interactive flip cards with light and dark theming for a premium shopping experience.',
       githubUrl: 'https://github.com/Farouk-Ahmed/-E-commerce',
-      websiteUrl: '',
+      websiteUrl: 'https://e-commerce-umber-nine-91.vercel.app/',
       swiperId: 'portfolio-proj3-swiper',
       paginationClass: 'portfolio-proj3-pagination',
       galleryId: 'proj3',
